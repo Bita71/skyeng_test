@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { UserCardBig } from "@/features/User";
 import { useUserById } from "@/entities/User";
 import { Button, Container } from "@/shared/ui";
+import { formatDateTime } from "@/shared/libs";
 
 export const UserPage = function UserPage() {
   const { id = 0 } = useParams();
@@ -26,7 +27,7 @@ export const UserPage = function UserPage() {
         name={data?.login}
         repoCount={data?.public_repos}
         loading={isLoading}
-        createdAt={data?.created_at}
+        createdAt={formatDateTime(data?.created_at || '')}
       />
     </Container>
   )

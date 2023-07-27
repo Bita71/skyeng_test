@@ -7,7 +7,7 @@ interface Params extends UsersParams {
 }
 
 export const useUsers = function useUsers({
-  enabled,
+  enabled = true,
   ...params
 }: Params) {
   return useQuery({

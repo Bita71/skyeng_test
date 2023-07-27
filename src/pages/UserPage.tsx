@@ -26,6 +26,7 @@ export const UserPage = function UserPage() {
         name={data?.login}
         repoCount={data?.public_repos}
         loading={isLoading}
+        createdAt={data?.created_at}
       />
     </Container>
   )

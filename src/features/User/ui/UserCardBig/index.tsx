@@ -13,6 +13,7 @@ interface Props {
   className?: string
   repoCount?: number,
   loading: boolean,
+  createdAt?: string,
 }
 
 export const UserCardBig: FC<Props> = function UserCardBig({
@@ -22,6 +23,7 @@ export const UserCardBig: FC<Props> = function UserCardBig({
   url,
   repoCount,
   loading,
+  createdAt
 }) {
   return (
     <Card
@@ -41,7 +43,7 @@ export const UserCardBig: FC<Props> = function UserCardBig({
       <CardMeta 
         title={name}
         avatar={<Avatar size="large" src={avatar} />}
-        description={`Количество репозиториев: ${repoCount}`}
+        description={`Создан ${createdAt}. Количество репозиториев: ${repoCount}`}
       />
     </Card>
   )

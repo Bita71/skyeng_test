@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Card, 
   CardMeta, 
@@ -7,9 +8,9 @@ import {
 } from '@/shared/ui';
 
 interface Props {
-  id: string,
-  avatar: string,
-  name: string,
+  id?: number,
+  avatar?: string,
+  name?: string,
   className?: string
 }
 
@@ -23,7 +24,15 @@ export const UserCard: FC<Props> = function UserCard({
     <Card
       className={className}
       actions={[
-        <Button size="small" type="link" href={`/user/${id}`}>Перейти</Button>
+        <Link to={`/user/${id}`}>
+          <Button 
+            size="small" 
+            type="link" 
+            href={`/user/${id}`}
+          >
+            Перейти
+          </Button>
+        </Link>
       ]}
     >
       <CardMeta 

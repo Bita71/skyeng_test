@@ -37,7 +37,7 @@ interface UsersResponse {
 }
 
 export const getUsers = (params: UsersParams) => (
-  api.get<Response | null>('/search/users', { params })
+  api.get<UsersResponse | null>('/search/users', { params })
     .then((response) => response.data)
 );
 

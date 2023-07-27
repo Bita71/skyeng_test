@@ -1,15 +1,18 @@
-import {
-  Routes,
-  Route,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { WithProviders } from './providers';
+import { routes } from "../pages";
 
 export const App = function App() {
   return (
     <WithProviders>
       <Routes>
-        <Route path="/" element={123}/>
-        <Route path="/user/:id" element={1234} />
+        {routes.map((route) => (
+          <Route
+            key={route.path} 
+            path={route.path}
+            element={route.element}
+          />
+        ))}
       </Routes>
     </WithProviders>
   );

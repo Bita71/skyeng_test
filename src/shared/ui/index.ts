@@ -6,3 +6,4 @@ export { Row, Col } from './Grid';
 export { Container } from './Container';
 export { Pagination } from './Pagination';
 export { Input, SearchInput } from './Input';
+export { Switch } from './Switch';

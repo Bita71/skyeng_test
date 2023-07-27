@@ -7,6 +7,7 @@ import {
   Col, 
   Pagination, 
   SearchInput,
+  Switch,
 } from '@/shared/ui';
 import styles from './styles.module.css';
 
@@ -18,12 +19,13 @@ export const UsersWidget: FC<Props> = function UsersWidget({
   className,
 }) {
   const [query, setQuery] = useState('');
+  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
   const { page, perPage, setPage, setPerPage } = useUsersPages();
 
   const { data, isLoading, isError, error, fetchStatus } = useUsers({
     q: query,
-    order: 'desc',
-    page: page,
+    order,
+    page,
     per_page: perPage,
     sort: 'repositories',
     enabled: query.length > 0,
@@ -38,6 +40,10 @@ export const UsersWidget: FC<Props> = function UsersWidget({
     setPerPage(newPerPage);
   }
 
+  const handleOrderChange = () => {
+    setOrder((prev) => prev === 'asc' ? 'desc' : 'asc')
+  }
+
   return (
     <div className={classNames(styles.wrapper, className)}>
       <SearchInput 
@@ -48,6 +54,13 @@ export const UsersWidget: FC<Props> = function UsersWidget({
         size="large"
         onSearch={setQuery}
         loading={isLoadingData}
+      />
+      <Switch
+        unCheckedChildren="По возрастания"
+        checkedChildren="По убыванию"
+        checked={order === 'desc'}
+        onChange={handleOrderChange}
+        disabled={isLoadingData}
       />
       {!isLoadingData 
       && !isError 

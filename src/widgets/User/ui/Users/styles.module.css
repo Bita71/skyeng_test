@@ -1,5 +1,14 @@
 .wrapper {
   align-items: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  height: 100%;
+  position: relative;
+}
+
+.search {
+  position: sticky;
+  top: 2em;
+  z-index: 2;
 }

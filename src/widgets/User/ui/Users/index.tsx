@@ -11,6 +11,7 @@ import {
   Spin,
 } from '@/shared/ui';
 import { useDebounce } from '@/shared/hooks';
+import { isValidString } from '@/shared/libs';
 import styles from './styles.module.css';
 
 interface Props {
@@ -26,12 +27,12 @@ export const UsersWidget: FC<Props> = function UsersWidget({
   const { page, perPage, setPage, setPerPage } = useUsersPages();
 
   const { data, isLoading, isError, error, fetchStatus } = useUsers({
-    q: debouncedQuery,
+    q: debouncedQuery.trim(),
     order,
     page,
     per_page: perPage,
     sort: 'repositories',
-    enabled: debouncedQuery.length > 0,
+    enabled: isValidString(debouncedQuery),
   })
 
   const hasUsers = data && data.items.length > 0;
@@ -67,7 +68,7 @@ export const UsersWidget: FC<Props> = function UsersWidget({
       {!isLoadingData 
       && !isError 
       && !hasUsers 
-      && debouncedQuery.length > 0
+      && isValidString(debouncedQuery)
       && <span>Пользователей не найдены</span>}
       {isError && <span>Ошибка: {String(error)}</span>}
       {showData && (

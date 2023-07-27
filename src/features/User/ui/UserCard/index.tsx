@@ -28,7 +28,6 @@ export const UserCard: FC<Props> = function UserCard({
           <Button 
             size="small" 
             type="link" 
-            href={`/user/${id}`}
           >
             Перейти
           </Button>

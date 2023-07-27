@@ -12,4 +12,9 @@ const usersList = (params: UsersParams) => [
   params.per_page,
 ]
 
-export { usersList }
+const userById = (id: number) => [
+  ...defaultQuery,
+  id,
+]
+
+export { usersList, userById }

@@ -1,8 +1,15 @@
 import { Link, useParams } from "react-router-dom";
+import { UserCardBig } from "@/features/User";
+import { useUserById } from "@/entities/User";
 import { Button, Container } from "@/shared/ui";
 
 export const UserPage = function UserPage() {
-  const { id = '' } = useParams();
+  const { id = 0 } = useParams();
+
+  const { data, isLoading } = useUserById({ 
+    id: Number(id || 0),
+    enabled: Boolean(id),
+  });
   return (
     <Container>
       <Link to="/">
@@ -13,9 +20,13 @@ export const UserPage = function UserPage() {
           Назад
         </Button>
       </Link>
-      <div>
-        user id - {id}
-      </div>
+      <UserCardBig
+        url={data?.html_url}
+        avatar={data?.avatar_url} 
+        name={data?.login}
+        repoCount={data?.public_repos}
+        loading={isLoading}
+      />
     </Container>
   )
 };

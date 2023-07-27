@@ -6,9 +6,11 @@ import {
   Row, 
   Col, 
   Pagination, 
-  SearchInput,
   Switch,
+  Input,
+  Spin,
 } from '@/shared/ui';
+import { useDebounce } from '@/shared/hooks';
 import styles from './styles.module.css';
 
 interface Props {
@@ -19,16 +21,17 @@ export const UsersWidget: FC<Props> = function UsersWidget({
   className,
 }) {
   const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 300);
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
   const { page, perPage, setPage, setPerPage } = useUsersPages();
 
   const { data, isLoading, isError, error, fetchStatus } = useUsers({
-    q: query,
+    q: debouncedQuery,
     order,
     page,
     per_page: perPage,
     sort: 'repositories',
-    enabled: query.length > 0,
+    enabled: debouncedQuery.length > 0,
   })
 
   const hasUsers = data && data.items.length > 0;
@@ -46,26 +49,25 @@ export const UsersWidget: FC<Props> = function UsersWidget({
 
   return (
     <div className={classNames(styles.wrapper, className)}>
-      <SearchInput 
+      <Input 
         className={styles.search}
         placeholder="Введите имя пользователя"
         allowClear
-        enterButton="Найти"
+        value={query}
+        onChange={(e) => setQuery(e.currentTarget.value)}
         size="large"
-        onSearch={setQuery}
-        loading={isLoadingData}
       />
       <Switch
         unCheckedChildren="По возрастания"
         checkedChildren="По убыванию"
         checked={order === 'desc'}
         onChange={handleOrderChange}
-        disabled={isLoadingData}
       />
+      {isLoadingData && <Spin />}
       {!isLoadingData 
       && !isError 
       && !hasUsers 
-      && query.length > 0
+      && debouncedQuery.length > 0
       && <span>Пользователей не найдены</span>}
       {isError && <span>Ошибка: {String(error)}</span>}
       {showData && (
